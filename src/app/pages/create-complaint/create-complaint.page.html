@@ -1,0 +1,265 @@
+<ion-content [fullscreen]="true" class="complaint-content">
+  <div class="page-container">
+    <div class="top-nav">
+      <ion-button fill="clear" (click)="goBack()"
+        ><ion-icon name="chevron-back"></ion-icon
+      ></ion-button>
+      <div class="brand">
+        <div class="nm">NM</div>
+        <div><b>Nirmaan</b><br /><span>Raise Complaint</span></div>
+      </div>
+      <div class="citizen-chip"><span></span> Citizen Portal</div>
+    </div>
+
+    <div class="protocol-card">
+      <div class="shield"><ion-icon name="shield-checkmark"></ion-icon></div>
+      <div>
+        <b>Direct Civic Resolution Protocol</b>
+        <p>Assigned to regional supervisor upon submission</p>
+      </div>
+    </div>
+
+    <div class="label-row">
+      <label>Category / Service Domain <span>*</span></label>
+      <small class="blue">{{ getSelectedCategoryLabel() }} selected</small>
+    </div>
+    <div class="chips-scroll">
+      <div
+        class="chip"
+        *ngFor="let cat of civicCategories"
+        [class.active]="selectedCategory===cat.key"
+        (click)="selectCategory(cat)"
+      >
+        <ion-icon [name]="cat.icon"></ion-icon> {{cat.label}}
+      </div>
+    </div>
+
+    <div class="label-row">
+      <label>Complaint Title <span>*</span></label
+      ><small>Max 80 chars</small>
+    </div>
+    <ion-item class="input-card" lines="none">
+      <ion-input
+        [(ngModel)]="title"
+        maxlength="80"
+        placeholder="Water leakage near Kanse Village"
+      ></ion-input>
+    </ion-item>
+
+    <div class="label-row">
+      <label>Description / Incident Specifics <span>*</span></label>
+    </div>
+    <ion-item class="input-card textarea" lines="none">
+      <ion-textarea
+        [(ngModel)]="description"
+        rows="3"
+        placeholder="Pipeline leakage wasting water from 2 days"
+      ></ion-textarea>
+    </ion-item>
+
+    <div class="mapping-card">
+      <div class="mapping-head">
+        <ion-icon name="business"></ion-icon><b>Municipal Authority Mapping</b
+        ><span class="auto">Auto-filtered</span>
+      </div>
+
+      <label
+        >Municipal Corporation (MNC Code) *
+        <small class="green">● Parent Authority</small></label
+      >
+      <ion-item
+        class="select-card"
+        lines="none"
+        button="true"
+        detail="false"
+        (click)="openMncModal()"
+      >
+        <ion-label class="small-text"
+          >{{ getMncDisplayName(mncCode) || 'Select MNC' }}</ion-label
+        >
+        <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+      </ion-item>
+      <div class="linked">
+        <span></span><ion-icon name="arrow-forward"></ion-icon> Linked to {{
+        getMncDisplayName(mncCode) || 'Not selected' }}
+      </div>
+
+      <label>Department (Dept Code) *</label>
+      <ion-item
+        class="select-card"
+        lines="none"
+        button="true"
+        detail="false"
+        (click)="openDeptModal()"
+        [class.disabled-item]="!mncCode"
+      >
+        <ion-label class="small-text" [style.opacity]="mncCode ? '1' : '0.5'">
+          {{ getDeptDisplayName(deptCode) || (mncCode ? 'Select Department' :
+          'Select MNC first') }}
+        </ion-label>
+        <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+      </ion-item>
+      <small
+        *ngIf="!mncCode"
+        style="
+          color: red;
+          font-size: 10px;
+          margin-left: 8px;
+          display: block;
+          margin-top: 4px;
+        "
+        >* Please select MNC first</small
+      >
+    </div>
+
+    <div class="label-row"><label>Severity / Urgency Level</label></div>
+    <div class="severity-grid">
+      <div
+        class="sev"
+        [class.active]="severity==='low'"
+        (click)="severity='low'"
+      >
+        <span class="dot blue"></span><b>Low</b><small>General</small>
+      </div>
+      <div
+        class="sev"
+        [class.active]="severity==='medium'"
+        (click)="severity='medium'"
+      >
+        <span class="dot green"></span><b>Medium</b><small>Standard</small>
+      </div>
+      <div
+        class="sev"
+        [class.active]="severity==='high'"
+        (click)="severity='high'"
+      >
+        <span class="dot red"></span><b>High</b><small>Affects zone</small>
+      </div>
+    </div>
+
+    <div class="label-row"><label>Photo / Video Evidence</label></div>
+    <div class="photo-grid">
+      <div class="photo-item" *ngFor="let p of photos; let i=index">
+        <img [src]="p.preview" />
+        <div class="close" (click)="removePhoto(i)">
+          <ion-icon name="close"></ion-icon>
+        </div>
+        <div class="tag">Photo {{i+1}}</div>
+      </div>
+      <div class="pick-box" *ngIf="photos.length<4" (click)="fileInput.click()">
+        <ion-icon name="camera-outline"></ion-icon><b>Pick Photo</b
+        ><small>Camera or Files</small>
+      </div>
+    </div>
+    <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      hidden
+      (change)="onFileSelected($event)"
+    />
+    <div *ngIf="reason" class="ai-box">
+      AI: {{reason}} | Severity: {{severity}} | Category: {{selectedCategory}}
+    </div>
+
+    <div class="label-row">
+      <label>Incident Address / Landmark <span>*</span></label
+      ><small class="green">● GPS Locked</small>
+    </div>
+    <ion-item class="input-card" lines="none">
+      <ion-input
+        [(ngModel)]="selectedAddress"
+        placeholder="Kanse Village Road, Ambarnath West"
+      ></ion-input>
+    </ion-item>
+
+    <div class="mapping-card">
+      <div class="label-row" style="margin: 0 0 8px 0">
+        <label
+          ><ion-icon name="compass-outline"></ion-icon> Interactive Map
+          Coordinates <span>*</span></label
+        >
+        <small
+          >{{latitude | number:'1.4-4'}}° N, {{longitude | number:'1.4-4'}}°
+          E</small
+        >
+      </div>
+      <div id="map-mini"></div>
+      <div class="map-actions">
+        <div class="tap">
+          <ion-icon name="location"></ion-icon> Tap map to pinpoint
+        </div>
+        <div class="recenter" (click)="myLocation()">
+          <ion-icon name="locate"></ion-icon> Re-center GPS
+        </div>
+      </div>
+    </div>
+
+    <ion-button
+      expand="block"
+      class="submit-btn"
+      (click)="submitComplaint()"
+      [disabled]="isSubmitting"
+    >
+      <ion-spinner *ngIf="isSubmitting"></ion-spinner>
+      <span *ngIf="!isSubmitting"
+        >Submit Grievance <ion-icon name="arrow-forward"></ion-icon
+      ></span>
+    </ion-button>
+    <div class="sla">
+      <ion-icon name="time-outline"></ion-icon> First review SLA:
+      <b>Within 24 hours</b>
+    </div>
+    <div style="height: 100px"></div>
+  </div>
+
+  <!-- MNC INLINE MODAL - FIXES EMPTY ISSUE -->
+  <div class="fancy-backdrop" *ngIf="showMncModal" (click)="closeMncModal()">
+    <div class="fancy-card" (click)="$event.stopPropagation()">
+      <h2>Select Municipal Corporation</h2>
+      <div class="fancy-divider"></div>
+      <div class="fancy-list">
+        <div
+          class="fancy-option"
+          *ngFor="let opt of mncDisplayList"
+          (click)="selectTempMnc(opt)"
+          [class.active]="tempMnc===opt.value"
+        >
+          <div class="fancy-radio" [class.checked]="tempMnc===opt.value">
+            <div class="inner" *ngIf="tempMnc===opt.value"></div>
+          </div>
+          <span [class.active-text]="tempMnc===opt.value">{{opt.label}}</span>
+        </div>
+      </div>
+      <div class="fancy-btns">
+        <button class="fancy-cancel" (click)="closeMncModal()">CANCEL</button>
+        <button class="fancy-ok" (click)="confirmMncModal()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEPT INLINE MODAL -->
+  <div class="fancy-backdrop" *ngIf="showDeptModal" (click)="closeDeptModal()">
+    <div class="fancy-card" (click)="$event.stopPropagation()">
+      <h2>Select Department</h2>
+      <div class="fancy-divider"></div>
+      <div class="fancy-list">
+        <div
+          class="fancy-option"
+          *ngFor="let opt of deptDisplayList"
+          (click)="selectTempDept(opt)"
+          [class.active]="tempDept===opt.value"
+        >
+          <div class="fancy-radio" [class.checked]="tempDept===opt.value">
+            <div class="inner" *ngIf="tempDept===opt.value"></div>
+          </div>
+          <span [class.active-text]="tempDept===opt.value">{{opt.label}}</span>
+        </div>
+      </div>
+      <div class="fancy-btns">
+        <button class="fancy-cancel" (click)="closeDeptModal()">CANCEL</button>
+        <button class="fancy-ok" (click)="confirmDeptModal()">OK</button>
+      </div>
+    </div>
+  </div>
+</ion-content>

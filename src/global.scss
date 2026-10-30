@@ -1,0 +1,141 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+
+/* ===== GLOBAL FIX - Same width for all pages ===== */
+
+// 1. All pages centered mobile width (like Instagram)
+.page-wrap,
+.dashboard-container,
+.tickets-container,
+.create-container {
+  max-width: 480px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding-left: 14px !important;
+  padding-right: 14px !important;
+  box-sizing: border-box;
+}
+
+// 2. Light background for all content
+ion-content {
+  --background: #f6f7fb !important;
+}
+
+// 3. FIX WHITE TEXT IN ALL INPUTS (your Water search issue)
+ion-input,
+ion-searchbar,
+ion-textarea {
+  --color: #111111 !important;
+  color: #111111 !important;
+  --placeholder-color: #9ca3af !important;
+}
+
+ion-input .native-input,
+ion-input input,
+ion-textarea .native-textarea,
+ion-textarea textarea {
+  color: #111111 !important;
+}
+
+// Ionic searchbar inner
+.searchbar-input {
+  color: #111 !important;
+}
+
+// 4. Common Bottom Tab Bar - same width everywhere
+.custom-tab-bar,
+.bottom-bar {
+  max-width: 480px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 100% !important;
+  border-radius: 20px 20px 0 0 !important;
+}
+
+// 5. Cards - same radius/shadow everywhere
+.ticket-card,
+.update-card,
+.complaint-card,
+.dashboard-card {
+  max-width: 100% !important;
+}
+
+// 6. Fix header avatar and logo size same everywhere
+.nm-logo, .nm-badge {
+  width: 36px !important;
+  height: 36px !important;
+}
+
+// 7. Remove Ionic default padding differences
+ion-content.tickets-content,
+ion-content.dashboard-content {
+  --padding-start: 0 !important;
+  --padding-end: 0 !important;
+}
+
+// 8. Mobile responsive - if desktop, keep centered with shadow like your 2nd image
+@media (min-width: 768px) {
+  body {
+    background: #e5e7eb !important;
+  }
+  ion-app {
+    max-width: 420px;
+    margin: 0 auto;
+    box-shadow: 0 0 40px rgba(0,0,0,0.15);
+    border-radius: 24px;
+    overflow: hidden;
+    height: 90vh;
+    margin-top: 5vh;
+  }
+  .custom-tab-bar,
+  .bottom-bar {
+    max-width: 420px !important;
+  }
+}
+
+ion-input, ion-textarea, ion-select {
+  --color: #000 !important;
+  color: #000 !important;
+}
+ion-label { color: #000 !important; }
+
+.fancy-alert .alert-wrapper {
+  border-radius: 20px !important;
+  background: #fff !important;
+}

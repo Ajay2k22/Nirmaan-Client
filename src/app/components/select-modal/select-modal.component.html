@@ -1,0 +1,27 @@
+<div class="fancy-modal-wrapper">
+  <div class="fancy-modal-card">
+    <h2 class="modal-title">{{ title }}</h2>
+    <div class="divider"></div>
+
+    <div class="options-list">
+      <div
+        class="option-item"
+        *ngFor="let opt of options"
+        (click)="selectOption(opt)"
+        [class.active]="selected === opt.value"
+      >
+        <div class="radio" [class.checked]="selected === opt.value">
+          <div class="inner" *ngIf="selected === opt.value"></div>
+        </div>
+        <span class="label" [class.active-label]="selected === opt.value">{{
+          opt.label
+        }}</span>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn cancel" (click)="cancel()">CANCEL</button>
+      <button class="btn ok" (click)="confirm()">OK</button>
+    </div>
+  </div>
+</div>

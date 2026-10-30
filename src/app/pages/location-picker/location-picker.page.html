@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+    <ion-title>Select Location</ion-title>
+    <ion-buttons slot="end"><ion-button (click)="confirm()">Done</ion-button></ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="searchText" (ionChange)="search()" placeholder="Search Ambarnath..."></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="picker-map"></div>
+  <div class="bottom-info">
+    <p><ion-icon name="location"></ion-icon> {{address}}</p>
+    <p><b>{{lat | number:'1.6-6'}}, {{lng | number:'1.6-6'}}</b></p>
+    <ion-button expand="block" (click)="confirm()">Confirm This Location</ion-button>
+    <ion-button expand="block" fill="outline" (click)="myLocation()">📍 Use My Location</ion-button>
+  </div>
+</ion-content>

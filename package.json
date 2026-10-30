@@ -1,0 +1,52 @@
+{
+  "name": "nirman-citizen-stable",
+  "version": "0.0.1",
+  "author": "Ionic Framework",
+  "homepage": "https://ionicframework.com/",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "lint": "ng lint"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^18.2.13",
+    "@angular/compiler": "^18.2.13",
+    "@angular/core": "^18.2.13",
+    "@angular/forms": "^18.2.13",
+    "@angular/platform-browser": "^18.2.13",
+    "@angular/platform-browser-dynamic": "^18.2.13",
+    "@angular/router": "^18.2.13",
+    "@capacitor/app": "8.1.2",
+    "@capacitor/core": "8.5.3",
+    "@capacitor/geolocation": "^8.2.4",
+    "@capacitor/haptics": "8.0.2",
+    "@capacitor/keyboard": "8.0.6",
+    "@capacitor/status-bar": "8.0.4",
+    "@ionic/angular": "^8.6.5",
+    "ionicons": "^7.4.0",
+    "leaflet": "^1.9.4",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "^0.14.10"
+  },
+  "devDependencies": {
+    "@angular/build": "^18.2.13",
+    "@angular/cli": "^18.2.13",
+    "@angular/compiler-cli": "^18.2.13",
+    "@angular/language-service": "^18.2.13",
+    "@capacitor/cli": "8.5.3",
+    "@ionic/angular-toolkit": "^12.2.0",
+    "@types/leaflet": "^1.9.22",
+    "angular-eslint": "22.5.0",
+    "eslint": "^10.10.0",
+    "jsdom": "^30.1.0",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.61.0",
+    "vitest": "~4.0.18"
+  },
+  "description": "An Ionic project"
+}

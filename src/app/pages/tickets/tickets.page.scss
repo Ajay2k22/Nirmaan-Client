@@ -1,0 +1,79 @@
+.tickets-page { --background: #f6f7fb; }
+.page-wrap { padding: 12px; }
+
+// Header
+.app-header { display:flex; justify-content:space-between; align-items:center; padding:6px 2px 16px;
+  .header-left{display:flex; gap:10px; align-items:center;
+    .nm-badge{width:36px;height:36px;background:#4f46e5;color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;}
+    .header-text h1{margin:0;font-size:17px;font-weight:700;color:#111;}
+    .header-text p{margin:0;font-size:12px;color:#6b7280;}
+  }
+  .avatar{width:32px;height:32px;border-radius:50%;}
+}
+
+// Search
+.search-wrap{display:flex; gap:10px; margin-bottom:12px;
+.search-box{
+  flex:1;background:#fff;border-radius:16px;display:flex;align-items:center;gap:8px;padding:0 14px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.04);height:46px;
+
+  // FIX - search text white issue
+  ion-icon{font-size:18px;color:#6b7280; min-width:18px;}
+
+  ion-input{
+    font-size:14px;
+    --color: #111111 !important;
+    --placeholder-color: #9ca3af !important;
+    color: #111111 !important;
+  }
+
+  // For Ionic 7+ inner input
+  ion-input .native-input,
+  ion-input input {
+    color: #111111 !important;
+  }
+}
+  .filter-icon{width:46px;height:46px;background:#fff;border-radius:14px;border:none;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.04);color:#4f46e5;font-size:20px;}
+}
+
+// Chips - MOBILE FIX
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 12px;scrollbar-width:none;
+  &::-webkit-scrollbar{display:none;}
+  .chip{flex:0 0 auto;background:#fff;border:1px solid #e5e7eb;border-radius:22px;padding:8px 14px;font-size:13px;font-weight:600;color:#111;display:flex;align-items:center;gap:6px;white-space:nowrap;
+    span{background:#f3f4f6;padding:2px 7px;border-radius:10px;font-size:11px;margin-left:2px;}
+    .dot{width:8px;height:8px;border-radius:50%;display:inline-block; &.blue{background:#3b82f6;} &.gray{background:#9ca3af;} &.green{background:#10b981;} &.red{background:#ef4444;}}
+    &.active{background:#4f46e5;color:#fff;border-color:#4f46e5; span{background:rgba(255,255,255,0.2);color:#fff;}}
+  }
+}
+
+// Cards
+.cards{display:flex;flex-direction:column;gap:12px;}
+.card{background:#fff;border-radius:18px;padding:14px;box-shadow:0 2px 12px rgba(0,0,0,0.04);
+  .card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;
+    .head-left{display:flex;gap:6px;
+      .id{background:#eef2ff;color:#4f46e5;padding:4px 8px;border-radius:8px;font-size:11px;font-weight:700;}
+      .sev{padding:4px 8px;border-radius:8px;font-size:11px;font-weight:700; &.low{background:#ecfdf5;color:#059669;} &.medium{background:#eef2ff;color:#4f46e5;} &.high{background:#fef2f2;color:#dc2626;}}
+    }
+    .status{padding:5px 10px;border-radius:20px;font-size:10px;font-weight:800;display:flex;align-items:center;gap:4px;
+      i{width:6px;height:6px;border-radius:50%;background:currentColor;}
+      &.resolved{background:#d1fae5;color:#065f46;} &.in_progress{background:#dbeafe;color:#1e40af;} &.pending{background:#f3f4f6;color:#4b5563;} &.rejected{background:#fee2e2;color:#991b1b;}
+    }
+  }
+  .cat{font-size:12px;color:#6b7280;display:flex;gap:4px;align-items:center;margin-bottom:6px; ion-icon{font-size:14px;}}
+  .title{font-size:14px;font-weight:700;color:#111;margin-bottom:4px;line-height:1.3;}
+  .desc{font-size:13px;color:#4b5563;margin-bottom:12px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .auth-box{background:#f5f3ff;border-radius:12px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;
+    .auth-left{display:flex;gap:8px;align-items:center;
+      .auth-ico{width:28px;height:28px;background:#e0e7ff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#4f46e5;}
+      .auth-text small{font-size:10px;color:#6b7280;display:block;line-height:1;} .auth-text b{font-size:12px;color:#111;display:block;}
+    }
+    .auth-right{font-size:11px;font-weight:700;color:#4f46e5;}
+  }
+  .card-foot{display:flex;justify-content:space-between;margin-top:10px;font-size:11px;color:#9ca3af; .action{color:#4f46e5;font-weight:700;}}
+}
+
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;align-items:center;padding:8px 0 18px;border-radius:20px 20px 0 0;box-shadow:0 -4px 20px rgba(0,0,0,0.06);z-index:10;max-width:480px;margin:0 auto;
+  .tab{display:flex;flex-direction:column;align-items:center;gap:2px;color:#9ca3af;font-size:10px; ion-icon{font-size:22px;} &.active{color:#4f46e5;}}
+  .fab{width:54px;height:54px;background:#4f46e5;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px;margin-top:-32px;box-shadow:0 8px 20px rgba(79,70,229,0.4);}
+}
+.center{text-align:center;padding:30px;}

@@ -1,0 +1,159 @@
+<!-- <ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/view-all-complaint"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="header-title">Complaint Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button><ion-icon name="star-outline"></ion-icon></ion-button>
+      <ion-button><ion-icon name="share-social-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true" class="view-complaint-page">
+  <div class="dashboard-header">
+    <div class="header-left">
+      <div class="nm-logo">
+        <span>NM</span>
+      </div>
+      <div class="header-text">
+        <h2>Nirmaan</h2>
+        <p>View Complaint</p>
+      </div>
+    </div>
+  </div>
+  <div class="content-wrapper">
+    <div *ngIf="isLoading" class="loader-wrap">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Loading complaint details...</p>
+    </div>
+    <ion-text color="danger" *ngIf="errorMsg && !isLoading" class="ion-padding">
+      <p>{{ errorMsg }}</p>
+    </ion-text>
+    <div *ngIf="complaint && !isLoading" class="page-wrapper">
+      <!-- Complaint ID Header - FIXED -->
+      <div class="id-row">
+        <div class="id-left">
+          <span class="id-badge">COMPLAINT ID</span>
+          <span class="id-value">#{{ getShortId() }}</span>
+        </div>
+        <ion-button
+          fill="clear"
+          size="small"
+          class="copy-btn"
+          (click)="copyId(complaint.complaintId)"
+        >
+          <ion-icon name="copy-outline"></ion-icon>
+        </ion-button>
+      </div>
+      <!-- Main Details Card -->
+      <div class="card details-card">
+        <div class="chip-row">
+          <span
+            class="chip status-chip"
+            [ngClass]="complaint.status?.toLowerCase()"
+          >
+            <ion-icon name="sync-outline"></ion-icon> {{ complaint.status }}
+          </span>
+          <span
+            class="chip severity-chip"
+            [ngClass]="complaint.severity?.toLowerCase()"
+          >
+            <ion-icon name="warning"></ion-icon> {{ complaint.severity }}
+            Severity
+          </span>
+          <span class="chip dept-chip">
+            <ion-icon name="water-outline"></ion-icon> {{ getDeptName() }}
+          </span>
+        </div>
+        <div class="created-row">
+          <ion-icon name="time-outline"></ion-icon>
+          <span
+            >Created On: {{ complaint.createdAt | date:'MMM d, y' }} • {{
+            complaint.createdAt | date:'hh:mm a' }}</span
+          >
+        </div>
+        <h1 class="complaint-title">
+          {{ complaint.title || 'Water pipeline leakage flooding pedestrian
+          walkway' }}
+        </h1>
+        <p class="complaint-desc">
+          {{ complaint.description || complaint.summary || 'Heavy pressurized
+          water has been continuously spurting from an underground utility line
+          across 5th Avenue and Oak Street intersection. The water has flooded
+          the primary pedestrian sidewalk, pooling over 4 inches deep and
+          creating hazardous walking conditions for local commuters.' }}
+        </p>
+      </div>
+      <!-- Reason / Root Cause Card -->
+      <div class="card reason-card">
+        <div class="card-header">
+          <ion-icon name="search-circle-outline"></ion-icon>
+          <span>Reason / Root Cause</span>
+        </div>
+        <div class="reason-body">
+          <p>
+            {{ complaint.reason || 'Corroded main pipe joint gasket ruptured
+            under excessive morning pressure surge; valve collar destabilized
+            near inspection chamber #14.' }}
+          </p>
+        </div>
+      </div>
+      <!-- Evidence Card -->
+      <div class="card evidence-card">
+        <div class="card-header evidence-header">
+          <div class="left">
+            <ion-icon name="images-outline"></ion-icon>
+            <span>Evidence</span>
+          </div>
+          <span class="attachment-count"
+            >{{ getAttachmentCount() }} Attachments</span
+          >
+        </div>
+        <div class="evidence-grid">
+          <div class="evidence-item">
+            <div class="img-wrap" [class.placeholder]="!complaint.photo">
+              <img
+                *ngIf="complaint.photo"
+                [src]="complaint.photo"
+                alt="Before"
+              />
+              <ion-icon
+                *ngIf="!complaint.photo"
+                name="image-outline"
+              ></ion-icon>
+              <span class="img-tag before-tag">Before</span>
+            </div>
+            <div class="img-meta">
+              <strong>Initial Incident</strong>
+              <span>Leakage & pooling</span>
+            </div>
+          </div>
+          <div class="evidence-item">
+            <div class="img-wrap" [class.placeholder]="!complaint.resolvedProofImg">
+              <img
+                *ngIf="complaint.resolvedProofImg"
+                [src]="complaint.resolvedProofImg"
+                alt="Resolved"
+              />
+              <ion-icon
+                *ngIf="!complaint.resolvedProofImg"
+                name="image-outline"
+              ></ion-icon>
+              <span class="img-tag resolved-tag">Resolved</span>
+            </div>
+            <div class="img-meta">
+              <strong>Post-Resolution Proof</strong>
+              <span>Gasket sealed & repaired</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Location Card -->
+    </div>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  </div>
+</ion-content>

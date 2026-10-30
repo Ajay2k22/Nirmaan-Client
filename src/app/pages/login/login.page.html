@@ -1,0 +1,105 @@
+<ion-content [fullscreen]="true">
+  <div class="login-wrapper">
+    <div class="login-container">
+      <!-- Header -->
+      <div class="header-card">
+        <div class="logo-box">
+          <span>NM</span>
+          <div class="online-dot"></div>
+        </div>
+        <h1>Welcome to Nirmaan</h1>
+        <p>Sign in to track, manage, and resolve grievances with confidence.</p>
+
+        <div class="status-badge">
+          <span class="dot"></span>
+          SYSTEM OPERATIONAL • 256-BIT SECURE
+        </div>
+      </div>
+
+      <!-- Form Card -->
+      <div class="form-card">
+        <div class="input-group">
+          <div class="label-row">
+            <label>Email Address</label>
+            <span>Required</span>
+          </div>
+          <div class="input-box">
+            <ion-icon name="mail-outline" class="lock-icon"></ion-icon>
+            <input
+              type="email"
+              [(ngModel)]="email"
+              placeholder="name@example.com"
+            />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="label-row">
+            <label>Password</label>
+            <span>Required</span>
+          </div>
+          <div class="input-box">
+            <ion-icon name="lock-closed-outline" class="lock-icon"></ion-icon>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="password"
+              placeholder="Enter your security password"
+            />
+            <ion-icon
+              [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+              class="eye-icon"
+              (click)="showPassword = !showPassword"
+            ></ion-icon>
+          </div>
+        </div>
+
+        <div class="options-row">
+          <!-- <div class="remember" (click)="toggleRemember()">
+            <span class="checkmark" [class.checked]="remember"></span>
+            Remember this device
+          </div> -->
+          <div class="safe-login">
+            <ion-icon name="shield-checkmark-outline"></ion-icon> Safe Login
+          </div>
+        </div>
+
+        <ion-button
+          expand="block"
+          class="login-btn"
+          (click)="login()"
+          [disabled]="isLoading"
+        >
+          <span *ngIf="!isLoading"
+            >Sign In <ion-icon name="arrow-forward-outline"></ion-icon
+          ></span>
+          <ion-spinner *ngIf="isLoading" name="dots"></ion-spinner>
+        </ion-button>
+      </div>
+
+      <!-- Links -->
+      <div class="links">
+        <a (click)="goToForgot()">Forgot Password?</a>
+        <p>
+          Don't have an account?
+          <a (click)="goToRegister()"
+            >Create a new user <ion-icon name="arrow-forward-outline"></ion-icon
+          ></a>
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer-secure">
+        <div class="secure-line">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <strong>256-bit SSL encrypted</strong>
+          <span class="dot-sep">•</span>
+          <strong>Nirmaan Grievance Redressal</strong>
+        </div>
+        <p>
+          Protected under Municipal Digital Standards Act. Your identity remains
+          strictly confidential.
+        </p>
+      </div>
+    </div>
+  </div>
+</ion-content>

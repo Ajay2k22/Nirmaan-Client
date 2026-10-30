@@ -1,0 +1,142 @@
+<ion-content [fullscreen]="true" class="tickets-page">
+  <div class="page-wrap">
+    <!-- Header -->
+    <div class="app-header">
+      <div class="header-left">
+        <div class="nm-badge">NM</div>
+        <div class="header-text">
+          <h1>Nirmaan</h1>
+          <p>Complaints List</p>
+        </div>
+      </div>
+      <!-- <img class="avatar" src="https://i.pravatar.cc/100?img=3" /> -->
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <div class="search-box">
+        <ion-icon name="search-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="searchText"
+          (ionInput)="onSearchChange($event)"
+          placeholder="Search by Ticket ID, keyword..."
+        ></ion-input>
+      </div>
+      <button class="filter-icon">
+        <ion-icon name="options-outline"></ion-icon>
+      </button>
+    </div>
+
+    <!-- Chips - FIXED TEXT VISIBLE -->
+    <div class="chips">
+      <button
+        class="chip"
+        [class.active]="selectedStatus==='ALL'"
+        (click)="filterByStatus('ALL')"
+      >
+        All <span>{{getStatusCount('ALL')}}</span>
+      </button>
+      <!-- <button
+        class="chip"
+        [class.active]="selectedStatus==='IN_PROGRESS'"
+        (click)="filterByStatus('IN_PROGRESS')"
+      >
+        <i class="dot blue"></i>In Progress
+        <span>{{getStatusCount('IN_PROGRESS')}}</span>
+      </button> -->
+      <button
+        class="chip"
+        [class.active]="selectedStatus==='PENDING'"
+        (click)="filterByStatus('PENDING')"
+      >
+        <i class="dot gray"></i>Under Review
+        <span>{{getStatusCount('PENDING')}}</span>
+      </button>
+      <button
+        class="chip"
+        [class.active]="selectedStatus==='RESOLVED'"
+        (click)="filterByStatus('RESOLVED')"
+      >
+        <i class="dot green"></i>Resolved
+        <span>{{getStatusCount('RESOLVED')}}</span>
+      </button>
+      <button
+        class="chip"
+        [class.active]="selectedStatus==='REJECTED'"
+        (click)="filterByStatus('REJECTED')"
+      >
+        <i class="dot red"></i>Rejected
+        <span>{{getStatusCount('REJECTED')}}</span>
+      </button>
+    </div>
+
+    <div *ngIf="isLoading" class="center"><ion-spinner></ion-spinner></div>
+
+    <!-- Cards -->
+    <div class="cards">
+      <div
+        class="card"
+        *ngFor="let item of filteredTickets"
+        (click)="openTicket(item)"
+      >
+        <div class="card-head">
+          <div class="head-left">
+            <span class="id">#{{(item.complaintId | slice:0:8)}}</span>
+            <span class="sev" [ngClass]="item.severity.toLowerCase()"
+              >{{item.severity}}</span
+            >
+          </div>
+          <span class="status" [ngClass]="item.status.toLowerCase()"
+            ><i></i>{{item.status}}</span
+          >
+        </div>
+
+        <div class="cat">
+          <ion-icon [name]="getIcon(item.category)"></ion-icon
+          >{{getCategory(item.category)}}
+        </div>
+
+        <div class="title">{{item.title}}</div>
+        <div class="desc">{{item.description}}</div>
+
+        <!-- <div class="auth-box">
+          <div class="auth-left">
+            <div class="auth-ico">
+              <ion-icon name="people-outline"></ion-icon>
+            </div>
+            <div class="auth-text">
+              <small>Assigned Authority</small>
+              <b>{{item.dept}} - {{item.mnc}}</b>
+            </div>
+          </div>
+          <div class="auth-right">
+            {{item.status==='IN_PROGRESS'?'⚡ Dispatched':'⚡ Details'}}
+          </div>
+        </div> -->
+
+        <div class="card-foot">
+          <!-- <span
+            ><ion-icon name="time-outline"></ion-icon> {{item.address |
+            slice:0:32}}</span -->
+          <!-- > -->
+          <span class="action"
+            >{{item.status==='IN_PROGRESS'?'Track Live
+            >':item.status==='RESOLVED'?'Report >':'Details >'}}</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div style="height: 90px"></div>
+  </div>
+</ion-content>
+
+<div class="bottom-bar">
+  <div class="tab" (click)="goHome()">
+    <ion-icon name="grid-outline"></ion-icon><span>Home</span>
+  </div>
+  <div class="fab" (click)="goCreate()"><ion-icon name="add"></ion-icon></div>
+  <div class="tab active">
+    <ion-icon name="clipboard"></ion-icon><span>Tickets</span>
+  </div>
+</div>

@@ -1,0 +1,157 @@
+<ion-content [fullscreen]="true">
+  <div class="register-wrapper">
+    <div class="register-container">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </div>
+        <div class="top-logo">
+          <ion-icon name="shield-checkmark"></ion-icon>
+          <div class="online-dot"></div>
+        </div>
+        <div class="page-count">1/2</div>
+      </div>
+
+      <!-- Header -->
+      <div class="header">
+        <div class="portal-badge">
+          <ion-icon name="settings-outline"></ion-icon>
+          NIRMAAN CITIZEN PORTAL
+        </div>
+        <h1>Create Account</h1>
+        <p>
+          Join our citizen resolution network to report and track issues
+          transparently.
+        </p>
+      </div>
+
+      <!-- Form -->
+      <div class="form">
+        <!-- First Last Name Row -->
+        <div class="row-2">
+          <div class="input-group">
+            <div class="label-row">
+              <label>First Name</label>
+              <span>Required</span>
+            </div>
+            <div class="input-box">
+              <ion-icon name="person-outline"></ion-icon>
+              <input type="text" [(ngModel)]="FirstName" placeholder="Ajay" />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <div class="label-row">
+              <label>Last Name</label>
+              <span>Required</span>
+            </div>
+            <div class="input-box">
+              <ion-icon name="person-outline"></ion-icon>
+              <input type="text" [(ngModel)]="LastName" placeholder="Jaiswal" />
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="label-row">
+            <label>Email</label>
+            <span>Required</span>
+          </div>
+          <div class="input-box">
+            <ion-icon name="mail-outline"></ion-icon>
+            <input
+              type="email"
+              [(ngModel)]="Email"
+              placeholder="ajaykumar99jaiswal@gmail.com"
+            />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="label-row">
+            <label>Password</label>
+            <span>Required</span>
+          </div>
+          <div class="input-box">
+            <ion-icon name="lock-closed-outline" class="prefix"></ion-icon>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="Password"
+              placeholder="••••••"
+            />
+            <ion-icon
+              [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+              class="suffix"
+              (click)="showPassword = !showPassword"
+            ></ion-icon>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="label-row">
+            <label>Confirm Password</label>
+            <span>Required</span>
+          </div>
+          <div class="input-box">
+            <ion-icon name="lock-closed-outline" class="prefix"></ion-icon>
+            <input
+              [type]="showConfirm ? 'text' : 'password'"
+              [(ngModel)]="ConfirmPassword"
+              placeholder="••••••"
+            />
+            <ion-icon
+              [name]="showConfirm ? 'eye-off-outline' : 'eye-outline'"
+              class="suffix"
+              (click)="showConfirm = !showConfirm"
+            ></ion-icon>
+          </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="terms-box">
+          <div
+            class="check"
+            [class.checked]="agreeTerms"
+            (click)="agreeTerms = !agreeTerms"
+          >
+            <ion-icon *ngIf="agreeTerms" name="checkmark"></ion-icon>
+          </div>
+          <p>
+            I agree to the <a>Community Terms of Service</a> and acknowledge the
+            <a>Privacy Policy</a>.
+          </p>
+        </div>
+
+        <!-- Secure Info -->
+        <div class="secure-info">
+          <ion-icon name="shield-checkmark"></ion-icon>
+          <p>
+            Your citizen credentials are securely verified through state
+            municipal protocols.
+          </p>
+        </div>
+
+        <!-- Button -->
+        <ion-button
+          expand="block"
+          class="create-btn"
+          (click)="register()"
+          [disabled]="isLoading"
+        >
+          <span *ngIf="!isLoading"
+            >Create Account <ion-icon name="arrow-forward-outline"></ion-icon
+          ></span>
+          <ion-spinner *ngIf="isLoading" name="dots"></ion-spinner>
+        </ion-button>
+
+        <div class="signin-link">
+          Already have an account?
+          <a (click)="goToLogin()"
+            >Sign In <ion-icon name="chevron-forward-outline"></ion-icon
+          ></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "nirman-citizen-stable",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

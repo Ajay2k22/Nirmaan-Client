@@ -1,0 +1,125 @@
+<ion-content [fullscreen]="true" class="dashboard-content">
+  <div class="dashboard-container">
+    <div class="top-header">
+      <div class="logo-section">
+        <div class="nm-logo">NM</div>
+        <div>
+          <h2>Nirmaan</h2>
+          <span>Dashboard</span>
+        </div>
+      </div>
+    </div>
+    <div class="greeting">
+      <h1>Hi, {{ firstName }} 👋</h1>
+      <div class="location-row">
+        <div class="loc" (click)="refreshLocation()" style="cursor: pointer">
+          <ion-icon name="location-outline"></ion-icon>
+          <span>{{ currentLocationText }}</span>
+          <ion-spinner *ngIf="isLocating" name="dots" style="width: 12px; height: 12px; margin-left: 4px"></ion-spinner>
+        </div>
+        <div class="live-ops"><span class="dot"></span> Live Ops</div>
+      </div>
+    </div>
+    <div class="action-card">
+      <div class="badge">INSTANT CIVIC ACTION</div>
+      <h3>Spotted an issue in your area?</h3>
+      <p>Report hazards, broken infrastructure, or utility leaks instantly.</p>
+      <ion-button expand="block" class="raise-btn" (click)="raiseComplaint()">
+        <ion-icon name="add-circle-outline"></ion-icon> Raise New Complaint
+      </ion-button>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="num">{{activeCount}}</span><span class="pill active"><span></span>Active</span>
+        </div>
+        <div class="stat-bottom"><ion-icon name="ellipsis-h"></ion-icon> In Progress</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="num">{{pendingCount}}</span><span class="pill pending"><span></span>Pending</span>
+        </div>
+        <div class="stat-bottom"><ion-icon name="time-outline"></ion-icon> Pending</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="num">{{fixedCount}}</span><span class="pill fixed"><span></span>Fixed</span>
+        </div>
+        <div class="stat-bottom"><ion-icon name="checkmark-circle-outline"></ion-icon> Resolved</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="num red">{{rejectedCount}}</span><span class="pill rejected"><span></span>Rejected</span>
+        </div>
+        <div class="stat-bottom"><ion-icon name="close-circle-outline"></ion-icon> Rejected</div>
+      </div>
+    </div>
+    <!-- Civic Categories - FROM ENUM ONLY -->
+    <div class="section-header">
+      <h3>Civic Categories</h3>
+      <span (click)="clearFilter()" *ngIf="selectedCategory">Clear</span>
+    </div>
+    <div class="categories-scroll">
+      <div
+        class="cat-card"
+        *ngFor="let cat of civicCategories"
+        [class.selected]="selectedCategory?.key === cat.key"
+        (click)="onCategoryClick(cat)"
+      >
+        <div class="cat-icon" [ngClass]="cat.color">
+          <ion-icon [name]="cat.icon"></ion-icon>
+        </div>
+        <b>{{ cat.label }}</b>
+        <small>{{ cat.subLabel }}</small>
+      </div>
+    </div>
+    <div *ngIf="selectedCategory">
+      <div class="section-header">
+        <h3>{{selectedCategory.label}} ({{filteredComplaints.length}})</h3>
+        <small (click)="clearFilter()" style="color: #3f2ef5; cursor: pointer">Clear</small>
+      </div>
+      <div *ngFor="let item of filteredComplaints" class="update-card" (click)="viewComplaint(item.complaintId)">
+        <div class="icon-wrap"><ion-icon name="alert-circle-outline"></ion-icon></div>
+        <div class="update-info">
+          <h4>{{item.title}}</h4>
+          <p>{{item.description | slice:0:45}}...</p>
+          <div class="ticket-row">
+            <span class="ticket">Ticket #{{item.complaintId | slice:0:8}}</span><span>• {{item.status}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!selectedCategory">
+      <div class="section-header">
+        <h3>Recent Updates</h3>
+        <small>Recent Search</small>
+      </div>
+      <div *ngFor="let item of recentComplaints" class="update-card" (click)="viewComplaint(item.complaintId)">
+        <div class="icon-wrap green"><ion-icon name="checkmark-outline"></ion-icon></div>
+        <div class="update-info">
+          <div class="update-top">
+            <h4>{{item.title}}</h4>
+            <small>{{item.status}}</small>
+          </div>
+          <p>{{item.description | slice:0:50}}...</p>
+          <div class="ticket-row">
+            <span class="ticket">Ticket #{{item.complaintId | slice:0:8}}</span>
+            <!-- <span>• {{item.address | slice:0:20}}</span> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="height: 90px"></div>
+  </div>
+</ion-content>
+<div class="custom-tab-bar">
+  <div class="tab-item active" (click)="goHome()">
+    <ion-icon name="grid-outline"></ion-icon><span>Home</span>
+  </div>
+  <div class="tab-plus" (click)="goToCreateComplaint()">
+    <ion-icon name="add"></ion-icon>
+  </div>
+  <div class="tab-item" (click)="goTickets()">
+    <ion-icon name="clipboard-outline"></ion-icon><span>Tickets</span>
+  </div>
+</div>
